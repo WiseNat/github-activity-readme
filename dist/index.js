@@ -1668,7 +1668,7 @@ Toolkit.run(
         if (!line) {
           return true;
         }
-        readmeContent.splice(startIdx + idx, 0, `${idx + 1}. ${line}`);
+        readmeContent.splice(startIdx + idx, 0, `\t${idx + 1}. ${line}`);
       });
       tools.log.success("Wrote to README");
     } else {
@@ -1681,7 +1681,7 @@ Toolkit.run(
           return true;
         }
         if (line !== "") {
-          readmeContent[startIdx + idx] = `${count + 1}. ${content[count]}`;
+          readmeContent[startIdx + idx] = `\t${count + 1}. ${content[count]}`;
           count++;
         }
       });
