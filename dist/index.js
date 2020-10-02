@@ -1652,7 +1652,7 @@ Toolkit.run(
 
     const oldContent = readmeContent.slice(startIdx + 1, endIdx).join("\n");
     const newContent = content
-      .map((line, idx) => `\t${idx + 1}. ${line}`)
+      .map((line, idx) => `\t ${idx + 1}. ${line}`)
       .join("\n");
 
     if (oldContent.trim() === newContent.trim())
