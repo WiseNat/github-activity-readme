@@ -1558,19 +1558,19 @@ const commitFile = async () => {
 
 const serializers = {
   IssueCommentEvent: (item) => {
-    return `\t🗣 Commented on ${toUrlFormat(item)} in ${toUrlFormat(
+    return `🗣 Commented on ${toUrlFormat(item)} in ${toUrlFormat(
       item.repo.name
     )}`;
   },
   IssuesEvent: (item) => {
-    return `\t❗️ ${capitalize(item.payload.action)} issue ${toUrlFormat(
+    return `❗️ ${capitalize(item.payload.action)} issue ${toUrlFormat(
       item
     )} in ${toUrlFormat(item.repo.name)}`;
   },
   PullRequestEvent: (item) => {
-    const emoji = item.payload.action === "opened" ? "\t📖" : "\t❌";
+    const emoji = item.payload.action === "opened" ? "📖" : "❌";
     const line = item.payload.pull_request.merged
-      ? "\t🔽 Merged"
+      ? "🔽 Merged"
       : `${emoji} ${capitalize(item.payload.action)}`;
     return `${line} PR ${toUrlFormat(item)} in ${toUrlFormat(item.repo.name)}`;
   },
@@ -1627,7 +1627,7 @@ Toolkit.run(
       // Add one since the content needs to be inserted just after the initial comment
       startIdx++;
       content.forEach((line, idx) =>
-        readmeContent.splice(startIdx + idx, 0, `${idx + 1}. ${line}`)
+        readmeContent.splice(startIdx + idx, 0, `\t${idx + 1}. ${line}`)
       );
 
       // Append <!--END_SECTION:activity--> comment
