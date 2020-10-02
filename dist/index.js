@@ -1632,11 +1632,11 @@ Toolkit.run(
       );
 
       // Append <!--END_SECTION:activity--> comment
-      readmeContent.splice(
-        startIdx + content.length,
-        0,
-        "<!--END_SECTION:activity-->"
-      );
+      //readmeContent.splice(
+      //  startIdx + content.length,
+      //  0,
+      //  "<!--END_SECTION:activity-->"
+      //);
 
       // Update README
       fs.writeFileSync("./README.md", readmeContent.join("\n"));
