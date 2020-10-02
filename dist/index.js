@@ -1505,10 +1505,11 @@ const urlPrefix = "https://github.com";
 const toUrlFormat = (item) => {
   if (typeof item === "object") {
     return Object.hasOwnProperty.call(item.payload, "issue")
-      ? `[#${item.payload.issue.number}](${urlPrefix}/${item.repo.name}/issues/${item.payload.issue.number})`
-      : `[#${item.payload.pull_request.number}](${urlPrefix}/${item.repo.name}/pull/${item.payload.pull_request.number})`;
+      ? `<a href="${urlPrefix}/${item.repo.name}/issues/${item.payload.issue.number})">#${item.payload.issue.number}</a>"`
+      : `<a href="(${urlPrefix}/${item.repo.name}/pull/${item.payload.pull_request.number})">#${item.payload.pull_request.number}</a>`;
   }
-  return `[${item}](${urlPrefix}/${item})`;
+  // return `[${item}](${urlPrefix}/${item})`;
+  return `<a href="(${urlPrefix}/${item})">${item}</a>`;
 };
 
 /**
@@ -1714,7 +1715,7 @@ Toolkit.run(
 
 module.exports = function (args, opts) {
     if (!opts) opts = {};
-    
+
     var flags = { bools : {}, strings : {}, unknownFn: null };
 
     if (typeof opts['unknown'] === 'function') {
@@ -1728,7 +1729,7 @@ module.exports = function (args, opts) {
           flags.bools[key] = true;
       });
     }
-    
+
     var aliases = {};
     Object.keys(opts.alias || {}).forEach(function (key) {
         aliases[key] = [].concat(opts.alias[key]);
@@ -1747,12 +1748,12 @@ module.exports = function (args, opts) {
      });
 
     var defaults = opts['default'] || {};
-    
+
     var argv = { _ : [] };
     Object.keys(flags.bools).forEach(function (key) {
         setArg(key, defaults[key] === undefined ? false : defaults[key]);
     });
-    
+
     var notFlags = [];
 
     if (args.indexOf('--') !== -1) {
@@ -1774,7 +1775,7 @@ module.exports = function (args, opts) {
             ? Number(val) : val
         ;
         setKey(argv, key.split('.'), value);
-        
+
         (aliases[key] || []).forEach(function (x) {
             setKey(argv, x.split('.'), value);
         });
@@ -1807,7 +1808,7 @@ module.exports = function (args, opts) {
             o[key] = [ o[key], value ];
         }
     }
-    
+
     function aliasIsBoolean(key) {
       return aliases[key].some(function (x) {
           return flags.bools[x];
@@ -1816,7 +1817,7 @@ module.exports = function (args, opts) {
 
     for (var i = 0; i < args.length; i++) {
         var arg = args[i];
-        
+
         if (/^--.+=/.test(arg)) {
             // Using [\s\S] instead of . because js doesn't support the
             // 'dotall' regex modifier. See:
@@ -1853,29 +1854,29 @@ module.exports = function (args, opts) {
         }
         else if (/^-[^-]+/.test(arg)) {
             var letters = arg.slice(1,-1).split('');
-            
+
             var broken = false;
             for (var j = 0; j < letters.length; j++) {
                 var next = arg.slice(j+2);
-                
+
                 if (next === '-') {
                     setArg(letters[j], next, arg)
                     continue;
                 }
-                
+
                 if (/[A-Za-z]/.test(letters[j]) && /=/.test(next)) {
                     setArg(letters[j], next.split('=')[1], arg);
                     broken = true;
                     break;
                 }
-                
+
                 if (/[A-Za-z]/.test(letters[j])
                 && /-?\d+(\.\d*)?(e-?\d+)?$/.test(next)) {
                     setArg(letters[j], next, arg);
                     broken = true;
                     break;
                 }
-                
+
                 if (letters[j+1] && letters[j+1].match(/\W/)) {
                     setArg(letters[j], arg.slice(j+2), arg);
                     broken = true;
@@ -1885,7 +1886,7 @@ module.exports = function (args, opts) {
                     setArg(letters[j], flags.strings[letters[j]] ? '' : true, arg);
                 }
             }
-            
+
             var key = arg.slice(-1)[0];
             if (!broken && key !== '-') {
                 if (args[i+1] && !/^(-|--)[^-]/.test(args[i+1])
@@ -1915,17 +1916,17 @@ module.exports = function (args, opts) {
             }
         }
     }
-    
+
     Object.keys(defaults).forEach(function (key) {
         if (!hasKey(argv, key.split('.'))) {
             setKey(argv, key.split('.'), defaults[key]);
-            
+
             (aliases[key] || []).forEach(function (x) {
                 setKey(argv, x.split('.'), defaults[key]);
             });
         }
     });
-    
+
     if (opts['--']) {
         argv['--'] = new Array();
         notFlags.forEach(function(key) {
@@ -7521,7 +7522,7 @@ var Toolkit = /** @class */ (function () {
                     case 3:
                         _a = ret;
                         _b.label = 4;
-                    case 4: 
+                    case 4:
                     // If the return value of the provided function is an unresolved Promise
                     // await that Promise before return the value, otherwise return as normal
                     return [2 /*return*/, _a];
@@ -15384,7 +15385,7 @@ exports.exec = exec;
 /******/ },
 /******/ function(__webpack_require__) { // webpackRuntimeModules
 /******/ 	"use strict";
-/******/ 
+/******/
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	!function() {
 /******/ 		__webpack_require__.nmd = function(module) {
@@ -15401,6 +15402,6 @@ exports.exec = exec;
 /******/ 			return module;
 /******/ 		};
 /******/ 	}();
-/******/ 	
+/******/
 /******/ }
 );
