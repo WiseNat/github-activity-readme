@@ -1509,7 +1509,7 @@ const toUrlFormat = (item) => {
       : `<a href="${urlPrefix}/${item.repo.name}/pull/${item.payload.pull_request.number}">#${item.payload.pull_request.number}</a>`;
   }
   // return `[${item}](${urlPrefix}/${item})`;
-  return `<a href="(${urlPrefix}/${item})">${item}</a>`;
+  return `<a href="${urlPrefix}/${item}">${item}</a>`;
 };
 
 /**
